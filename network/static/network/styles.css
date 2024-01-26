@@ -1,0 +1,47 @@
+#new-post {
+    margin-block: 1rem;
+    margin-right: auto;
+    display: block;
+    margin-inline: auto 0;
+}
+
+.wrapper {
+    width: clamp(16rem, 90vw, 70rem);
+    display: block;
+    margin: auto;
+    border: black solid 1px;
+    margin-block: 1rem;
+    border-radius: 5px;
+    padding: 1em;
+}
+
+h3 {
+    padding-bottom: 0.5em;
+}
+
+.created {
+    color: rgb(158, 158, 158);
+}
+
+.form-control {
+    width: 90%;
+    margin: auto;
+}
+
+.paginate {
+    width: clamp(16rem, 90vw, 70rem);
+    display: block;
+    margin: auto;
+    margin-block: 1rem;
+}
+
+#edit-button {
+    display: block;
+    margin-block: 0.5em;
+}
+
+#save-btn {
+    display: block;
+    margin-inline: auto 0;
+    margin-block: 1rem;
+}

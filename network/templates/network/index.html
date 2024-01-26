@@ -1,0 +1,81 @@
+{% extends "network/layout.html" %}
+{% load static %}
+
+{% block body %}
+
+    {% if message %}
+    <div class="warpper">
+        {{ message }}
+    </div>
+    {% endif %}
+    {% if user.is_authenticated %}
+    <div class="wrapper">
+        <h2>
+            New Post
+        </h2>
+        <form action="{% url 'network:index' %}" method="post">
+            {% csrf_token %}
+            {{ new_post_form }}
+            <button id="new-post" class="btn-sm btn-primary" type="submit">Post</button>
+        </form>
+    </div>
+    {% endif %}
+    {% for post in posts %}
+    <div class="wrapper" data-value="{{ post.id }}">
+        <div class="post-edit-form" style="display: none;">
+            <textarea name="edit" id="edit-box" class="edit-text form-control" cols="30" rows="5"></textarea>
+            <button id="save-btn" class="btn-sm btn-outline-primary">Save</button>
+        </div>
+        <div class="post-body">
+            <a href="{% url 'network:profile' post.poster.id %}">
+                <h3>{{ post.poster }}</h3>
+            </a>
+            <div class="post-content">
+                {{ post.content }}
+            </div>
+            {% if post.poster == user %}
+                <button id="edit-button" class="btn-sm btn-outline-primary" value="{{ post.id }}">Edit</button>
+            {% endif %}
+        </div>
+        <div class="post-details">
+            <p class="created">{{ post.created_at }}</p>
+            <p id="likes-amount">Likes: {{ post.likes }}</p>
+            {% if user.is_authenticated %}
+                {% if user in post.liked_by.all %}
+                    <p><a class="like" href="#" onclick="return false;">Unlike</a></p>
+                {% else %}
+                    <p><a class="like" href="#" onclick="return false;">Like</a></p>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+    {% empty %}
+    <div class="wrapper">
+        <strong>No Posts</strong>
+    </div>
+    {% endfor %}
+
+
+    <nav aria-label="paginate" class="paginate">
+        <ul class="pagination">
+        {% if posts.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page={{ posts.previous_page_number }}"> < </a></li>
+        {% endif %}
+        {% if posts %}
+            {% for page in posts.paginator.page_range %}
+                {% if posts.number == page %}
+                    <li id="pages" class="page-item active"><a class="page-link" href="?page={{ page }}"> {{ page }} </a></li>
+                {% else %}
+                    <li id="pages" class="page-item"><a class="page-link" href="?page={{ page }}"> {{ page }} </a></li>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        {% if posts.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{ posts.next_page_number }}"> > </a></li>
+        {% endif %}
+        </ul>
+    </nav>
+    
+    {% csrf_token %}
+    <script src="{% static 'network/index.js' %}"></script>
+{% endblock %}
