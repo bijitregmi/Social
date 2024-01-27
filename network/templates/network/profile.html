@@ -21,7 +21,7 @@
 </div>
 
 {% for post in posts %}
-    <div class="wrapper" value="{{ post.id }}">
+    <div class="wrapper" data-value="{{ post.id }}">
         <div class="post-edit-form" style="display: none;">
             <textarea name="edit" id="edit-box" class="edit-text form-control" cols="30" rows="5"></textarea>
             <button id="save-btn" class="btn-sm btn-outline-primary">Save</button>
