@@ -9,4 +9,4 @@ class NewPostForm(ModelForm):
 
     class Meta:
         model = Post
-        fields =['content']
+        fields = ['content']
